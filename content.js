@@ -19,9 +19,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       "time-info style-scope ytmusic-player-bar"
     )[0].textContent;
 
-    const arteAlbum = document.getElementsByClassName(
-      "image style-scope ytmusic-player-bar"
-    )[0].src;
+    const arteAlbum = document
+      .getElementById("thumbnail")
+      .getElementsByTagName("img")[0].src;
+
+    console.log(arteAlbumHQ);
 
     const dadosMusica = {
       tituloMusica,
