@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body{
+    width: 25rem;
+    background-color: #000;
+    color: #e7e7e7;
+    margin: 0;
+}
+
+#music-title{
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+#music-artist{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0;
+}
+
+#music-time{
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: .8rem;
+    margin: 0;
+}
+
+#corpo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+#div-capa{
+    width: 10rem;
+    z-index: 2;
+}
+
+#div-info{
+    width: 15rem;
+    z-index: 2;
+}
+
+#music-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 0rem;
+    border-radius: 10px;
+}
+
+#music-cover-back{
+    margin: 0;
+    z-index: 1;
+    position: absolute;
+    width: 200%;
+    margin-top: -2rem;
+    filter: blur(75px) brightness(0.5);
+    transform: rotate(20deg);
+    transform-origin: top left;
+    opacity: 0.5;
+}
+
+#music-list{
+    z-index: 2;
+    padding: 2rem;
+}
+
+.music-item{
+    cursor: pointer;
+    transition: all .2s;
+
+}
+
+.music-item-title{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 0;
+}
+
+#div-queue{
+    position: relative;
+    z-index: 2;
+    padding: 0 .5rem;
+}
