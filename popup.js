@@ -38,6 +38,8 @@ function atualizarFila() {
         titulo.classList.add("queue-item-title");
         titulo.textContent = musica.titulo;
 
+        titulo.addEventListener("click", () => musica.play());
+
         const artista = document.createElement("span");
         artista.classList.add("queue-item-artist");
         artista.textContent = musica.artista;

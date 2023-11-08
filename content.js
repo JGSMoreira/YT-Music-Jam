@@ -42,23 +42,34 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     for (let i = 0; i < fila.length; i++) {
       if (i % 2 === 0) {
         const musica = fila[i];
+
         const titulo = musica.getElementsByClassName(
           "song-title style-scope ytmusic-player-queue-item"
         )[0].textContent;
+
         const artista = musica.getElementsByClassName(
           "byline style-scope ytmusic-player-queue-item"
         )[0].textContent;
+
         const tempo = musica.getElementsByClassName(
           "duration style-scope ytmusic-player-queue-item"
         )[0].textContent;
+
+        const playButton = musica.getElementsByTagName(
+          "ytmusic-play-button-renderer"
+        );
+
         const dados = {
           titulo,
           artista,
           tempo,
+          play: () => playButton[0].click(),
         };
+
         lista.push(dados);
       }
     }
+
     chrome.runtime.sendMessage({ fila: lista });
   }
 });

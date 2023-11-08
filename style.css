@@ -112,3 +112,7 @@ body{
     margin: 0;
 }
 
+.queue-item-title:hover{
+    color: #fff;
+    cursor: pointer;
+}
