@@ -30,6 +30,7 @@ function atualizarFila() {
 
         const item = document.createElement("div");
         item.classList.add("queue-item");
+        item.addEventListener("click", () => musica.play());
 
         const itemMain = document.createElement("div");
         itemMain.classList.add("queue-item-main");
@@ -37,8 +38,6 @@ function atualizarFila() {
         const titulo = document.createElement("span");
         titulo.classList.add("queue-item-title");
         titulo.textContent = musica.titulo;
-
-        titulo.addEventListener("click", () => musica.play());
 
         const artista = document.createElement("span");
         artista.classList.add("queue-item-artist");
