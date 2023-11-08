@@ -3,7 +3,6 @@ let fila = [];
 
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const activeTab = tabs[0];
-  // console.log(activeTab);
   // Verifica se a URL da guia ativa pertence ao YouTube Music
   if (activeTab && activeTab.url.includes("music.youtube.com")) {
     // Injeta um script na página para acessar informações da música

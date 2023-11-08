@@ -91,3 +91,24 @@ body{
     z-index: 2;
     padding: 0 .5rem;
 }
+
+.queue-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem;
+}
+
+.queue-item-main{
+    display: flex;
+    flex-direction: column;
+}
+
+.queue-item-title{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 0;
+}
+

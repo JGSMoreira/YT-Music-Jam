@@ -22,29 +22,33 @@ function atualizarFila() {
     if (response?.fila) {
       const valorArmazenado = response.fila;
 
-      const lista = document.getElementById("music-list-body");
+      const lista = document.getElementById("div-queue");
       lista.innerHTML = "";
 
       for (let i = 0; i < valorArmazenado.length; i++) {
         const musica = valorArmazenado[i];
 
-        const item = document.createElement("tr");
-        item.classList.add("music-item");
+        const item = document.createElement("div");
+        item.classList.add("queue-item");
 
-        const titulo = document.createElement("td");
-        titulo.classList.add("music-item-title");
+        const itemMain = document.createElement("div");
+        itemMain.classList.add("queue-item-main");
+
+        const titulo = document.createElement("span");
+        titulo.classList.add("queue-item-title");
         titulo.textContent = musica.titulo;
 
-        const artista = document.createElement("td");
-        artista.classList.add("music-item-artist");
+        const artista = document.createElement("span");
+        artista.classList.add("queue-item-artist");
         artista.textContent = musica.artista;
 
-        const tempo = document.createElement("td");
-        tempo.classList.add("music-item-time");
+        const tempo = document.createElement("span");
+        tempo.classList.add("queue-item-time");
         tempo.textContent = musica.tempo;
 
-        item.appendChild(titulo);
-        item.appendChild(artista);
+        itemMain.appendChild(titulo);
+        itemMain.appendChild(artista);
+        item.appendChild(itemMain);
         item.appendChild(tempo);
 
         lista.appendChild(item);
