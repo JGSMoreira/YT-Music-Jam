@@ -10,8 +10,6 @@ async function playPause() {
   });
 }
 
-let aux = false;
-
 async function atualizarMusica() {
   await chrome.runtime.sendMessage(
     { action: "getMusica" },
@@ -31,17 +29,12 @@ async function atualizarMusica() {
 
         document.getElementById("container-cover").addEventListener("click", () => {
           playPause();
-          if (valorArmazenado.estaTocando) {
-            document.getElementById("button").classList.toggle("pause");
-          }
-
         });
 
-        if (valorArmazenado.estaTocando && !aux) {
-          document.getElementById("button").classList.toggle("pause");
-          aux = true;
-        } else if (!valorArmazenado.estaTocando && aux) {
-          aux = false;
+        if (valorArmazenado.estaTocando) {
+          document.getElementById("button").classList.add("pause");
+        } else {
+          document.getElementById("button").classList.remove("pause");
         }
 
         document.getElementById("music-cover-back").src =
