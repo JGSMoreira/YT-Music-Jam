@@ -17,17 +17,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 });
 
 function verificarStatusMusica() {
-  chrome.tabs.query(
-    { active: true, currentWindow: true },
-    async function (tabs) {
-      const activeTab = tabs[0];
-      if (activeTab && activeTab?.url?.includes("music.youtube.com")) {
-        await chrome.tabs.sendMessage(activeTab.id, {
-          action: "obterStatusMusica",
-        });
-      }
-    }
-  );
+  chrome.tabs.query({ currentWindow: true }, async function (tabs) {
+    const ytMusicTab = tabs.find((tab) =>
+      tab.url.includes("music.youtube.com")
+    );
+    await chrome.tabs.sendMessage(ytMusicTab.id, {
+      action: "obterStatusMusica",
+    });
+  });
 }
 
 function verificarFila() {

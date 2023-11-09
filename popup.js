@@ -1,5 +1,14 @@
 // runtime: background.js | tabs: content.js
 
+async function playPause() {
+  chrome.tabs.query({ currentWindow: true }, function (tabs) {
+    const ytMusicTab = tabs.find((tab) =>
+      tab.url.includes("music.youtube.com")
+    );
+    chrome.tabs.sendMessage(ytMusicTab.id, { action: "playPause" });
+  });
+}
+
 async function atualizarMusica() {
   await chrome.runtime.sendMessage(
     { action: "getMusica" },
@@ -15,6 +24,9 @@ async function atualizarMusica() {
           valorArmazenado.tempoMusica;
 
         document.getElementById("music-cover").src = valorArmazenado.arteAlbum;
+        document.getElementById("music-cover").addEventListener("click", () => {
+          playPause();
+        });
         document.getElementById("music-cover-back").src =
           valorArmazenado.arteAlbum;
       }
@@ -23,9 +35,11 @@ async function atualizarMusica() {
 }
 
 async function tocarMusica(index) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, { action: "tocarMusica", index });
+  chrome.tabs.query({ currentWindow: true }, function (tabs) {
+    const ytMusicTab = tabs.find((tab) =>
+      tab.url.includes("music.youtube.com")
+    );
+    chrome.tabs.sendMessage(ytMusicTab.id, { action: "tocarMusica", index });
   });
 }
 
