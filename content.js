@@ -17,6 +17,9 @@ function obterStatusMusica() {
     .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
     .textContent.split("•");
 
+  const estaTocando = estaTocandoF();
+
+
   const artistaMusica = infoMusica[0]?.trim();
 
   const albumMusica = infoMusica[1]?.trim();
@@ -30,6 +33,7 @@ function obterStatusMusica() {
     anoMusica,
     tempoMusica,
     arteAlbum,
+    estaTocando,
   };
 
   return { musicaAtual: dadosMusica };
@@ -80,6 +84,14 @@ function playPause() {
 
 function tocarMusica(index) {
   filaGlobal[index].play();
+}
+
+function estaTocandoF() {
+  if (document.getElementById("play-pause-button").getAttribute("title") == "Pausar") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 chrome.runtime.onMessage.addListener(async function (

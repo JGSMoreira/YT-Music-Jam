@@ -1,26 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-body{
+body {
     width: 25rem;
     background-color: #000;
     color: #e7e7e7;
     margin: 0;
 }
 
-#music-title{
+#music-title {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
     font-size: 1.5rem;
 }
 
-#music-artist{
+#music-artist {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 1rem;
     margin: 0;
 }
 
-#music-time{
+#music-time {
     font-family: 'Inter', sans-serif;
     font-style: italic;
     font-weight: 400;
@@ -28,7 +28,7 @@ body{
     margin: 0;
 }
 
-#corpo{
+#corpo {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -38,12 +38,12 @@ body{
     padding: 1rem;
 }
 
-#div-capa{
+#div-capa {
     width: 10rem;
     z-index: 2;
 }
 
-#div-info{
+#div-info {
     width: 15rem;
     z-index: 2;
 }
@@ -56,7 +56,59 @@ body{
     border-radius: 10px;
 }
 
-#music-cover-back{
+#container-cover {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+#container-cover:hover .image {
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+#container-cover:hover .middle {
+    opacity: 1;
+}
+
+#button {
+    box-sizing: border-box;
+    width: 37px;
+    height: 37px;
+
+    border: solid;
+    border-width: 19px 0px 19px 35px;
+    border-color: transparent transparent transparent white;
+
+    transition: 100ms all ease;
+    cursor: pointer;
+
+}
+
+#button.pause {
+    border-style: double;
+    border-width: 0px 0px 0px 35px;
+}
+
+#music-cover-back {
     margin: 0;
     z-index: 1;
     position: absolute;
@@ -68,31 +120,31 @@ body{
     opacity: 0.5;
 }
 
-#music-list{
+#music-list {
     z-index: 2;
     padding: 2rem;
 }
 
-.music-item{
+.music-item {
     cursor: pointer;
     transition: all .2s;
 
 }
 
-.music-item-title{
+.music-item-title {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 12px;
     margin: 0;
 }
 
-#div-queue{
+#div-queue {
     position: relative;
     z-index: 2;
     padding: 0 .5rem;
 }
 
-.queue-item{
+.queue-item {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,19 +153,19 @@ body{
     transition: all .2s ease-in-out;
 }
 
-.queue-item-main{
+.queue-item-main {
     display: flex;
     flex-direction: column;
 }
 
-.queue-item-title{
+.queue-item-title {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 12px;
     margin: 0;
 }
 
-.queue-item:hover{
+.queue-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
 }

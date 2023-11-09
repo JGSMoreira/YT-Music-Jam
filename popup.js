@@ -10,6 +10,8 @@ async function playPause() {
   });
 }
 
+let aux = false;
+
 async function atualizarMusica() {
   await chrome.runtime.sendMessage(
     { action: "getMusica" },
@@ -23,11 +25,25 @@ async function atualizarMusica() {
           valorArmazenado.artistaMusica;
         document.getElementById("music-time").textContent =
           valorArmazenado.tempoMusica;
+        document.getElementById("music-cover").src =
+          valorArmazenado.arteAlbum;
 
-        document.getElementById("music-cover").src = valorArmazenado.arteAlbum;
-        document.getElementById("music-cover").addEventListener("click", () => {
+
+        document.getElementById("container-cover").addEventListener("click", () => {
           playPause();
+          if (valorArmazenado.estaTocando) {
+            document.getElementById("button").classList.toggle("pause");
+          }
+
         });
+
+        if (valorArmazenado.estaTocando && !aux) {
+          document.getElementById("button").classList.toggle("pause");
+          aux = true;
+        } else if (!valorArmazenado.estaTocando && aux) {
+          aux = false;
+        }
+
         document.getElementById("music-cover-back").src =
           valorArmazenado.arteAlbum;
       }
@@ -87,6 +103,7 @@ async function atualizarFila() {
     }
   });
 }
+
 
 atualizarFila();
 atualizarMusica();
