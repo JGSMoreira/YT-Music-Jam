@@ -5,6 +5,7 @@ async function playPause() {
     const ytMusicTab = tabs.find((tab) =>
       tab.url.includes("music.youtube.com")
     );
+    if (!ytMusicTab) return;
     chrome.tabs.sendMessage(ytMusicTab.id, { action: "playPause" });
   });
 }
@@ -39,6 +40,7 @@ async function tocarMusica(index) {
     const ytMusicTab = tabs.find((tab) =>
       tab.url.includes("music.youtube.com")
     );
+    if (!ytMusicTab) return;
     chrome.tabs.sendMessage(ytMusicTab.id, { action: "tocarMusica", index });
   });
 }

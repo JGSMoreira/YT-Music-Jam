@@ -21,6 +21,7 @@ function verificarStatusMusica() {
     const ytMusicTab = tabs.find((tab) =>
       tab.url.includes("music.youtube.com")
     );
+    if (!ytMusicTab) return;
     await chrome.tabs.sendMessage(ytMusicTab.id, {
       action: "obterStatusMusica",
     });
