@@ -8,32 +8,41 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // Injeta um script na página para acessar informações da música
     chrome.scripting.executeScript({
       target: { tabId: activeTab.id },
-      function: (tab) => {
-        chrome.runtime.sendMessage({ musicInfo });
+      function: async (tab) => {
+        console.log("tab", tab);
+        await chrome.runtime.sendMessage({ musicInfo });
       },
     });
   }
 });
 
 function verificarStatusMusica() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0];
-    if (activeTab.url && activeTab.url.includes("music.youtube.com")) {
-      chrome.tabs.sendMessage(activeTab.id, { action: "obterStatusMusica" });
+  chrome.tabs.query(
+    { active: true, currentWindow: true },
+    async function (tabs) {
+      const activeTab = tabs[0];
+      if (activeTab && activeTab?.url?.includes("music.youtube.com")) {
+        await chrome.tabs.sendMessage(activeTab.id, {
+          action: "obterStatusMusica",
+        });
+      }
     }
-  });
+  );
 }
 
 function verificarFila() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const activeTab = tabs[0];
-    if (activeTab.url && activeTab.url.includes("music.youtube.com")) {
-      chrome.tabs.sendMessage(activeTab.id, { action: "getFila" });
+  chrome.tabs.query(
+    { active: true, currentWindow: true },
+    async function (tabs) {
+      const activeTab = tabs[0];
+      if (activeTab && activeTab.url.includes("music.youtube.com")) {
+        await chrome.tabs.sendMessage(activeTab.id, { action: "getFila" });
+      }
     }
-  });
+  );
 }
 
-const intervalObterFila = setInterval(verificarFila, 10000);
+const intervalObterFila = setInterval(verificarFila, 1000);
 const intervalObterDadosMusica = setInterval(verificarStatusMusica, 1000);
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

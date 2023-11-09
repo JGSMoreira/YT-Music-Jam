@@ -1,24 +1,36 @@
-function atualizarMusica() {
-  chrome.runtime.sendMessage({ action: "getMusica" }, function (response) {
-    if (response?.musicaAtual) {
-      const valorArmazenado = response.musicaAtual;
+// runtime: background.js | tabs: content.js
 
-      document.getElementById("music-title").textContent =
-        valorArmazenado.tituloMusica;
-      document.getElementById("music-artist").textContent =
-        valorArmazenado.artistaMusica;
-      document.getElementById("music-time").textContent =
-        valorArmazenado.tempoMusica;
+async function atualizarMusica() {
+  await chrome.runtime.sendMessage(
+    { action: "getMusica" },
+    function (response) {
+      if (response?.musicaAtual) {
+        const valorArmazenado = response.musicaAtual;
 
-      document.getElementById("music-cover").src = valorArmazenado.arteAlbum;
-      document.getElementById("music-cover-back").src =
-        valorArmazenado.arteAlbum;
+        document.getElementById("music-title").textContent =
+          valorArmazenado.tituloMusica;
+        document.getElementById("music-artist").textContent =
+          valorArmazenado.artistaMusica;
+        document.getElementById("music-time").textContent =
+          valorArmazenado.tempoMusica;
+
+        document.getElementById("music-cover").src = valorArmazenado.arteAlbum;
+        document.getElementById("music-cover-back").src =
+          valorArmazenado.arteAlbum;
+      }
     }
+  );
+}
+
+async function tocarMusica(index) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const activeTab = tabs[0];
+    chrome.tabs.sendMessage(activeTab.id, { action: "tocarMusica", index });
   });
 }
 
-function atualizarFila() {
-  chrome.runtime.sendMessage({ action: "getFila" }, function (response) {
+async function atualizarFila() {
+  await chrome.runtime.sendMessage({ action: "getFila" }, function (response) {
     if (response?.fila) {
       const valorArmazenado = response.fila;
 
@@ -30,7 +42,9 @@ function atualizarFila() {
 
         const item = document.createElement("div");
         item.classList.add("queue-item");
-        item.addEventListener("click", () => musica.play());
+        item.addEventListener("click", function () {
+          tocarMusica(i);
+        });
 
         const itemMain = document.createElement("div");
         itemMain.classList.add("queue-item-main");

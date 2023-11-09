@@ -1,5 +1,11 @@
+let filaGlobal = [];
+
 // Obter dados da música que está tocando no YouTube Music (obterStatusMusica)
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (
+  message,
+  sender,
+  sendResponse
+) {
   if (message.action === "obterStatusMusica") {
     const tituloMusica = document.getElementsByClassName(
       "title style-scope ytmusic-player-bar"
@@ -17,11 +23,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
       .textContent.split("•");
 
-    const artistaMusica = infoMusica[0].trim();
+    const artistaMusica = infoMusica[0]?.trim();
 
-    const albumMusica = infoMusica[1].trim();
+    const albumMusica = infoMusica[1]?.trim();
 
-    const anoMusica = infoMusica[2].trim();
+    const anoMusica = infoMusica[2]?.trim();
 
     const dadosMusica = {
       tituloMusica,
@@ -32,7 +38,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       arteAlbum,
     };
 
-    chrome.runtime.sendMessage({ musicaAtual: dadosMusica });
+    await chrome.runtime.sendMessage({ musicaAtual: dadosMusica });
   }
 
   if (message.action === "getFila") {
@@ -69,7 +75,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         lista.push(dados);
       }
     }
+    filaGlobal = lista;
+    await chrome.runtime.sendMessage({ fila: lista });
+  }
 
-    chrome.runtime.sendMessage({ fila: lista });
+  if (message.action === "tocarMusica") {
+    filaGlobal[message.index].play();
+    await chrome.runtime.sendMessage({ status: "ok" });
   }
 });
