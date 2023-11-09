@@ -17,7 +17,10 @@ function obterStatusMusica() {
     .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
     .textContent.split("•");
 
-  const estaTocando = document.getElementById("play-pause-button").getAttribute("title") == "Pausar";
+  const pauseStrings = ["Pausar", "Pause"];
+  const estaTocando = pauseStrings.includes(
+    document.getElementById("play-pause-button").getAttribute("title")
+  );
 
   const artistaMusica = infoMusica[0]?.trim();
 
