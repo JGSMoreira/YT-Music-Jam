@@ -9,9 +9,16 @@ function obterStatusMusica() {
     "time-info style-scope ytmusic-player-bar"
   )[0].textContent;
 
-  const arteAlbum = document
+
+  const arteAlbumSrc = document
     .getElementById("thumbnail")
     .getElementsByTagName("img")[0].src;
+
+  const arteAlbum = arteAlbumSrc.includes("data:")
+    ? document.getElementsByClassName(
+      "image style-scope ytmusic-player-bar"
+    )[0].src
+    : arteAlbumSrc;
 
   const infoMusica = document
     .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
