@@ -23,11 +23,20 @@ async function atualizarMusica() {
           valorArmazenado.artistaMusica;
         document.getElementById("music-time").textContent =
           valorArmazenado.tempoMusica;
+        document.getElementById("music-cover").src =
+          valorArmazenado.arteAlbum;
 
-        document.getElementById("music-cover").src = valorArmazenado.arteAlbum;
-        document.getElementById("music-cover").addEventListener("click", () => {
+
+        document.getElementById("container-cover").addEventListener("click", () => {
           playPause();
         });
+
+        if (valorArmazenado.estaTocando) {
+          document.getElementById("button").classList.add("pause");
+        } else {
+          document.getElementById("button").classList.remove("pause");
+        }
+
         document.getElementById("music-cover-back").src =
           valorArmazenado.arteAlbum;
       }
@@ -87,6 +96,7 @@ async function atualizarFila() {
     }
   });
 }
+
 
 atualizarFila();
 atualizarMusica();

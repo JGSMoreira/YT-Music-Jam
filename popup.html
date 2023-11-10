@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>YTM Jam</title>
-    <meta charset="utf-8" />
-    <script src="popup.js"></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div id="corpo">
-      <img id="music-cover-back" src="" />
-      <div id="div-capa">
-        <img id="music-cover" src="" />
-      </div>
-      <div id="div-info">
-        <p><span id="music-title">???</span></p>
-        <p><span id="music-artist">???</span></p>
-        <p><span id="music-time">???</span></p>
+
+<head>
+  <title>YTM Jam</title>
+  <meta charset="utf-8" />
+  <script src="popup.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="corpo">
+    <img id="music-cover-back" src="" />
+    <div id="div-capa">
+      <div id="container-cover">
+        <img id="music-cover" class="image" src="" alt="music cover" />
+        <div class="middle">
+          <div id="button" role="button"></div>
+        </div>
       </div>
     </div>
-    <!-- <div class="queue-item">
+    <div id="div-info">
+      <p><span id="music-title">???</span></p>
+      <p><span id="music-artist">???</span></p>
+      <p><span id="music-time">???</span></p>
+    </div>
+  </div>
+  <!-- <div class="queue-item">
       <div class="queue-item-main">
         <span class="queue-item-title">Nome da música</span>
         <span class="queue-item-artist">Artista</span>
       </div>
       <span class="queue-item-duration">3:00</span>
     </div> -->
-    <!-- <hr /> -->
-    <div id="div-queue"></div>
-  </body>
+  <!-- <hr /> -->
+  <div id="div-queue"></div>
+</body>
+
 </html>

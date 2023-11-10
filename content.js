@@ -17,6 +17,11 @@ function obterStatusMusica() {
     .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
     .textContent.split("•");
 
+  const pauseStrings = ["Pausar", "Pause"];
+  const estaTocando = pauseStrings.includes(
+    document.getElementById("play-pause-button").getAttribute("title")
+  );
+
   const artistaMusica = infoMusica[0]?.trim();
 
   const albumMusica = infoMusica[1]?.trim();
@@ -30,6 +35,7 @@ function obterStatusMusica() {
     anoMusica,
     tempoMusica,
     arteAlbum,
+    estaTocando,
   };
 
   return { musicaAtual: dadosMusica };
