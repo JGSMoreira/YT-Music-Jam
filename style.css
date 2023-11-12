@@ -10,7 +10,7 @@ body {
 #music-title {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 #music-artist {
@@ -28,12 +28,24 @@ body {
     margin: 0;
 }
 
+#music-time-bar{
+    width: 100%;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 0;
+}
+
+#music-time-bar::-webkit-progress-value{
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+}
+
 #corpo {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
     gap: 1rem;
     padding: 1rem;
 }
@@ -44,6 +56,9 @@ body {
 }
 
 #div-info {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
     width: 15rem;
     z-index: 2;
 }
@@ -75,7 +90,6 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
 
@@ -141,7 +155,8 @@ body {
 #div-queue {
     position: relative;
     z-index: 2;
-    padding: 0 .5rem;
+    padding: .5rem .5rem;
+
 }
 
 .queue-item {
@@ -150,6 +165,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: .5rem;
+    gap: .5rem;
     transition: all .2s ease-in-out;
 }
 

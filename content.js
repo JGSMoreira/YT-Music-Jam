@@ -1,5 +1,43 @@
 let filaGlobal = [];
 
+const observerEstaTocando = new MutationObserver(function (mutations) {
+  for (let mutation of mutations) {
+    if (mutation.type === "attributes") {
+      if (mutation.attributeName === "title") {
+        const target = mutation.target;
+        chrome.runtime.sendMessage({
+          estaTocando: target.getAttribute("title"),
+        });
+      }
+    }
+  }
+});
+
+const observerTempo = new MutationObserver(function (mutations) {
+  mutations.forEach(async (mutation) => {
+    if (mutation.type === "characterData") {
+      const target = mutation.target;
+      await chrome.runtime.sendMessage({
+        tempoMusica: target.textContent,
+      });
+    }
+  });
+});
+
+observerEstaTocando.observe(document.getElementById("play-pause-button"), {
+  attributes: true,
+  childList: true,
+});
+
+observerTempo.observe(
+  document.querySelector(".time-info.style-scope.ytmusic-player-bar"),
+  {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  }
+);
+
 function obterStatusMusica() {
   const tituloMusica = document.getElementsByClassName(
     "title style-scope ytmusic-player-bar"
@@ -9,25 +47,18 @@ function obterStatusMusica() {
     "time-info style-scope ytmusic-player-bar"
   )[0].textContent;
 
-
   const arteAlbumSrc = document
     .getElementById("thumbnail")
     .getElementsByTagName("img")[0].src;
 
   const arteAlbum = arteAlbumSrc.includes("data:")
-    ? document.getElementsByClassName(
-      "image style-scope ytmusic-player-bar"
-    )[0].src
+    ? document.getElementsByClassName("image style-scope ytmusic-player-bar")[0]
+        .src
     : arteAlbumSrc;
 
   const infoMusica = document
     .getElementsByClassName("subtitle style-scope ytmusic-player-bar")[0]
     .textContent.split("•");
-
-  const pauseStrings = ["Pausar", "Pause"];
-  const estaTocando = pauseStrings.includes(
-    document.getElementById("play-pause-button").getAttribute("title")
-  );
 
   const artistaMusica = infoMusica[0]?.trim();
 
@@ -42,7 +73,6 @@ function obterStatusMusica() {
     anoMusica,
     tempoMusica,
     arteAlbum,
-    estaTocando,
   };
 
   return { musicaAtual: dadosMusica };

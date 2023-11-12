@@ -15,30 +15,19 @@ async function atualizarMusica() {
     { action: "getMusica" },
     function (response) {
       if (response?.musicaAtual) {
-        const valorArmazenado = response.musicaAtual;
+        const { musicaAtual } = response;
 
         document.getElementById("music-title").textContent =
-          valorArmazenado.tituloMusica;
+          musicaAtual.tituloMusica;
         document.getElementById("music-artist").textContent =
-          valorArmazenado.artistaMusica;
-        document.getElementById("music-time").textContent =
-          valorArmazenado.tempoMusica;
-        document.getElementById("music-cover").src =
-          valorArmazenado.arteAlbum;
+          musicaAtual.artistaMusica;
+        document.getElementById("music-cover").src = musicaAtual.arteAlbum;
 
+        document
+          .getElementById("container-cover")
+          .addEventListener("click", () => playPause());
 
-        document.getElementById("container-cover").addEventListener("click", () => {
-          playPause();
-        });
-
-        if (valorArmazenado.estaTocando) {
-          document.getElementById("button").classList.add("pause");
-        } else {
-          document.getElementById("button").classList.remove("pause");
-        }
-
-        document.getElementById("music-cover-back").src =
-          valorArmazenado.arteAlbum;
+        document.getElementById("music-cover-back").src = musicaAtual.arteAlbum;
       }
     }
   );
@@ -52,6 +41,11 @@ async function tocarMusica(index) {
     if (!ytMusicTab) return;
     chrome.tabs.sendMessage(ytMusicTab.id, { action: "tocarMusica", index });
   });
+}
+
+function updateBotao(estaTocando) {
+  if (estaTocando) document.getElementById("button").classList.add("pause");
+  else document.getElementById("button").classList.remove("pause");
 }
 
 async function atualizarFila() {
@@ -97,8 +91,29 @@ async function atualizarFila() {
   });
 }
 
-
 atualizarFila();
 atualizarMusica();
 
 const intervalUpdateMusica = setInterval(atualizarMusica, 1000);
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.estaTocando) {
+    const estaTocando = ["Pausar", "Pause"].includes(message.estaTocando);
+    updateBotao(estaTocando);
+  }
+
+  if (message.tempoMusica) {
+    import("./utils.js").then((utils) => {
+      const [current, duration] = message.tempoMusica.split(" / ");
+
+      const currentTime = utils.convertTimeString(current);
+      const totalTime = utils.convertTimeString(duration);
+
+      document.getElementById("music-time").textContent = message.tempoMusica;
+
+      const timeBar = document.getElementById("music-time-bar");
+      timeBar.max = totalTime;
+      timeBar.value = currentTime;
+    });
+  }
+});
