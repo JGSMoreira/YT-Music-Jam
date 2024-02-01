@@ -94,7 +94,7 @@ async function atualizarFila() {
 atualizarFila();
 atualizarMusica();
 
-const intervalUpdateMusica = setInterval(atualizarMusica, 1000);
+const intervalUpdateMusica = setInterval(atualizarMusica, 500);
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.estaTocando) {

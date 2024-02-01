@@ -119,9 +119,13 @@ function getFila() {
 function playPause() {
   const playPauseMusicButton = document.getElementById("play-pause-button");
   playPauseMusicButton.click();
+  enviarMensagemParaServidor("Música pausada/retomada");
 }
 
 function tocarMusica(index) {
+  enviarMensagemParaServidor(
+    `Tocando ${filaGlobal[index].titulo} de ${filaGlobal[index].artista}`
+  );
   filaGlobal[index].play();
 }
 
@@ -147,3 +151,27 @@ chrome.runtime.onMessage.addListener(async function (
     }
   }
 });
+
+// Estabelece uma conexão com o script de extensão
+const port = chrome.runtime.connect({ name: "content-script" });
+
+// Listener para mensagens enviadas do script de extensão
+port.onMessage.addListener(function (msg) {
+  console.log("Recebido do script de extensão:", msg);
+});
+
+// Função para enviar mensagens para o servidor WebSocket
+function enviarMensagemParaServidor(mensagem) {
+  // Substitua a URL do WebSocket pelo seu servidor WebSocket
+  const wsURL = "ws://localhost:8765/extensao";
+  const ws = new WebSocket(wsURL);
+
+  ws.onopen = function (event) {
+    ws.send(mensagem);
+  };
+
+  ws.onmessage = function (event) {
+    // Envia a mensagem recebida para o script de extensão
+    port.postMessage({ mensagem: event.data });
+  };
+}

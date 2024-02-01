@@ -1,6 +1,24 @@
 let musicaAtual = null;
 let fila = [];
 
+let conexoes = {};
+
+chrome.runtime.onConnect.addListener(function (port) {
+  const tabId = port.sender.tab.id;
+  conexoes[tabId] = port;
+
+  port.onDisconnect.addListener(function () {
+    delete conexoes[tabId];
+  });
+});
+
+function enviarMensagemParaServidor(tabId, mensagem) {
+  const conexao = conexoes[tabId];
+  if (conexao) {
+    conexao.postMessage({ mensagem: mensagem });
+  }
+}
+
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const activeTab = tabs[0];
   // Verifica se a URL da guia ativa pertence ao YouTube Music
